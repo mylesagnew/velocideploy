@@ -155,7 +155,12 @@ function reinstall() {
 function menu() {
     while true; do
         echo -ne "
-    ${yellow}=== VELOCIRAPTOR DEPLOYMENT ===${clear}
+    ${yellow}____   ____     .__         .__    .___            .__                
+\   \ /   /____ |  |   ____ |__| __| _/____ ______ |  |   ____ ___.__.
+ \   Y   // __ \|  | _/ ___\|  |/ __ |/ __ \\____ \|  |  /  _ <   |  |
+  \     /\  ___/|  |_\  \___|  / /_/ \  ___/|  |_> >  |_(  <_> )___  |
+   \___/  \___  >____/\___  >__\____ |\___  >   __/|____/\____// ____|
+              \/          \/        \/    \/|__|               \/ ${clear}
     ${blue}(1)${clear} Install Velociraptor Server
     ${blue}(2)${clear} Upload Sensors to Dropbox
     ${blue}(3)${clear} Upload Sensors to AWS S3
