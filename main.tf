@@ -90,7 +90,7 @@ resource "aws_security_group_rule" "group-velo-gui" {
 
 resource "aws_instance" "instance-velo" {      
 #Creates a Ubuntu 20 Server base instance; all resources created are tracked by the case name variable
-    ami = "ami-0c767edd88b9f8d28" ##REVIEW - Change the AMI ID for Ubuntu 20 Server depending on your region
+    ami = "ami-0f2bbb476b5c42526" ##REVIEW - Change the AMI ID for Ubuntu 20 Server depending on your region
     key_name = aws_key_pair.ssh-velo.key_name
     instance_type = "m5.large" ## As per 
     security_groups = [ "${var.case_name}" ]
