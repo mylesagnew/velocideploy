@@ -1,14 +1,4 @@
   <h3 align="center">Velcideploy</h3>
-
-
- __     __     _        _      _               _               
- \ \   / /___ | |  ___ (_)  __| |  ___  _ __  | |  ___   _   _ 
-  \ \ / // _ \| | / __|| | / _` | / _ \| '_ \ | | / _ \ | | | |
-   \ V /|  __/| || (__ | || (_| ||  __/| |_) || || (_) || |_| |
-    \_/  \___||_| \___||_| \__,_| \___|| .__/ |_| \___/  \__, |
-                                       |_|               |___/ 
-
-<!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
   <ol>
