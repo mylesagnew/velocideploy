@@ -71,15 +71,7 @@ Follow the guides to install requirements for Terraform, Ansible, and AWS:
 
 <!-- SERVER-TEARDOWN -->
 ## Teardown
-1. Give execute permissions to the Destroy script:
-   ```sh
-   chmod +x ./VRAutomate/destroy.sh
-   ```
-2. Execute the script:
-   ```sh
-   ./VRAutomate/destroy.sh
-   ```
-Enter the case name and type in 'yes' to destroy.
+
 
 <!-- ROADMAP -->
 ## Roadmap
