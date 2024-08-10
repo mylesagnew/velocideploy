@@ -65,7 +65,7 @@ resource "aws_security_group_rule" "group-velo-ssh" {
     to_port = 22
     protocol = "tcp"
     security_group_id = "${aws_security_group.secgroup-velo.id}"
-    cidr_blocks = ["${chomp(data.http.my_ip.body)}/32"]
+    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
 }
 
 resource "aws_security_group_rule" "group-velo-frontend" {      
@@ -85,7 +85,7 @@ resource "aws_security_group_rule" "group-velo-gui" {
     to_port = 8889
     protocol = "tcp"
     security_group_id = "${aws_security_group.secgroup-velo.id}"
-    cidr_blocks = ["${chomp(data.http.my_ip.body)}/32"]
+    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
 }
 
 resource "aws_instance" "instance-velo" {      
