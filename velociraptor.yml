@@ -30,10 +30,10 @@
       url: https://github.com/Velocidex/velociraptor/releases/download/v0.6.1/velociraptor-v0.6.1-windows-amd64.msi
       dest: "./Windows/win-velociraptor.msi"
   
-  - name: Copy deploy.sh
+  - name: Copy vrdeploy.sh
     copy:
-      src: ./deploy.sh
-      dest: ./deploy.sh
+      src: ./vrdeploy.sh
+      dest: ./vrdeploy.sh
       mode: +x
   
   - name: Copy win_install.bat
@@ -49,7 +49,7 @@
 
   - name: Add AWS public IP to script
     replace:
-      path: ./deploy.sh
+      path: ./vrdeploy.sh
       regexp: 'aws_public_ip'
       replace: "{{ ansible_host }}"
 
