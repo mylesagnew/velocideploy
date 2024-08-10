@@ -21,13 +21,13 @@
 
   - name: Download Velociraptor binary (Linux)
     get_url:
-      url: https://github.com/Velocidex/velociraptor/releases/download/v0.6.1/velociraptor-v0.6.1-linux-amd64
+      url: https://github.com/Velocidex/velociraptor/releases/download/v0.72/velociraptor-v0.72.0-linux-amd64
       dest: "./velociraptor"
       mode: +x
   
   - name: Download Velociraptor binary (Windows)
     get_url:
-      url: https://github.com/Velocidex/velociraptor/releases/download/v0.6.1/velociraptor-v0.6.1-windows-amd64.msi
+      url: https://github.com/Velocidex/velociraptor/releases/download/v0.72/velociraptor-v0.72.0-windows-amd64.msi
       dest: "./Windows/win-velociraptor.msi"
   
   - name: Copy vrdeploy.sh
@@ -54,4 +54,4 @@
       replace: "{{ ansible_host }}"
 
   - name: Copy script to startup
-    ansible.builtin.shell: sudo echo './deploy.sh' >> ~/.bash_profile
+    ansible.builtin.shell: sudo echo './vrdeploy.sh' >> ~/.bash_profile
