@@ -74,14 +74,16 @@ Follow the guides to install requirements for Terraform, Ansible, and AWS:
 
 <!-- USAGE -->
 ## Usage
-1.
-Enter a Value: ie 'Raptor' (Without Quotes will deploy all the Infrastructure using this tag) 
+1. Enter a Value: ie 'Raptor' (Without Quotes will deploy all the Infrastructure using this tag) 
 
-2.
-Do you want to perform these actions?
+2.Do you want to perform these actions?
 Enter a Value: 'yes'  (If you are happy with the itemised list from Terraform)
 
+3. Take note of IP's
+aws_private_ip= ""
+aws_public_ip= "" <- This address you will use for DNS A record ie raptor.mylesagnew.com
 
+4. 
 <!-- AGENT-DEPLOY -->
 ## Agent Deployment
 
