@@ -30,7 +30,7 @@
       url: https://github.com/Velocidex/velociraptor/releases/download/v0.72/velociraptor-v0.72.0-windows-amd64.msi
       dest: "./Windows/win-velociraptor.msi"
   
-  - name: Copy vrdeploy.sh
+  - name: Copy awsdeploy.sh
     copy:
       src: ./vrdeploy.sh
       dest: ./vrdeploy.sh
