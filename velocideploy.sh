@@ -32,7 +32,8 @@ function install_gcp() {
         return 1
     fi
 }
-
+# Permission to execute sub-scripts
+chmod 755 /aws/*.sh /azure/*.sh /gcp/*.s
 # Main menu
 function menu() {
     while true; do
