@@ -8,7 +8,7 @@ clear='\e[0m'
 
 # Function to install Velociraptor
 function velociraptor_install() {
-    if ! sudo ./aws-install config generate -i; then
+    if ! sudo ./aws-install.sh config generate -i; then
         echo -e "${red}Failed to generate Velociraptor config.${clear}"
         return 1
     fi
