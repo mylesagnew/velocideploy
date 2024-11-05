@@ -64,11 +64,11 @@ Follow the guides to install requirements for Terraform, Ansible, and AWS:
 
 2. Give execute permissions to the Velociraptor script:
    ```sh
-   chmod +x ./velocideploy/velociraptor.sh
+   chmod +x ./velocideploy/velocideploy.sh
 
 3. Execute the script:
    ```sh
-   ./velocideploy/velociraptor.sh
+   ./velocideploy/velocideploy.sh
    ```
 
 <!-- USAGE -->
