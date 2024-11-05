@@ -45,7 +45,7 @@ function display_ip() {
 }
 
 # Permission to execute sub-scripts
-chmod 755 /aws/aws-*.sh /azure/azure-*.sh /gcp/gcp-*.sh
+find ./aws ./azure ./gcp -type f -name "*.sh" -exec chmod 755 {} \;
 
 # Main menu
 function menu() {
