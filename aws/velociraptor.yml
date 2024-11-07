@@ -39,7 +39,7 @@
   - name: Copy install.bat
     copy:
       src: ./install.bat
-      dest: ./Windows/0install.bat
+      dest: ./Windows/install.bat
 
   - name: Copy nix_install.sh
     copy:
