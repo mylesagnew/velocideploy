@@ -32,8 +32,8 @@
   
   - name: Copy awsdeploy.sh
     copy:
-      src: ./vrdeploy.sh
-      dest: ./vrdeploy.sh
+      src: ./aws-deploy.sh
+      dest: ./aws-deploy.sh
       mode: +x
   
   - name: Copy win_install.bat
