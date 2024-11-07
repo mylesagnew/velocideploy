@@ -3,7 +3,7 @@
 # Define variables
 REPO_URL="https://github.com/mylesagnew/velocideploy/archive/refs/heads/main.zip"
 ZIP_FILE="velocideploy-main.zip"
-EXTRACT_DIR="velocideploy-main"
+EXTRACT_DIR="velocideploy"
 
 # Download the repository
 echo "Downloading repository..."
