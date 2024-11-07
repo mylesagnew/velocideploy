@@ -6,19 +6,31 @@ yellow='\e[33m'
 blue='\e[34m'
 clear='\e[0m'
 
+# Debug: Print SCRIPT_DIR value
+echo "SCRIPT_DIR is set to: $SCRIPT_DIR"
+
 # Set permissions for AWS scripts
 if [ -d "$SCRIPT_DIR/velocideploy/aws" ]; then
+    echo "Setting permissions for AWS scripts in $SCRIPT_DIR/velocideploy/aws"
     find "$SCRIPT_DIR/velocideploy/aws" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for AWS scripts."
+else
+    echo "Error: Directory $SCRIPT_DIR/velocideploy/aws does not exist."
 fi
 
 # Set permissions for Azure scripts
 if [ -d "$SCRIPT_DIR/velocideploy/azure" ]; then
+    echo "Setting permissions for Azure scripts in $SCRIPT_DIR/velocideploy/azure"
     find "$SCRIPT_DIR/velocideploy/azure" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for Azure scripts."
+else
+    echo "Error: Directory $SCRIPT_DIR/velocideploy/azure does not exist."
 fi
 
 # Set permissions for GCP scripts
 if [ -d "$SCRIPT_DIR/velocideploy/gcp" ]; then
+    echo "Setting permissions for GCP scripts in $SCRIPT_DIR/velocideploy/gcp"
     find "$SCRIPT_DIR/velocideploy/gcp" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for GCP scripts."
+else
+    echo "Error: Directory $SCRIPT_DIR/velocideploy/gcp does not exist."
 fi
 
 # Function to install Velociraptor on AWS
