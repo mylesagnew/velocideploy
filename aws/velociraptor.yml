@@ -54,4 +54,4 @@
       replace: "{{ ansible_host }}"
 
   - name: Copy script to startup
-    ansible.builtin.shell: sudo echo './vrdeploy.sh' >> ~/.bash_profile
+    ansible.builtin.shell: sudo echo './aws-deploy.sh' >> ~/.bash_profile
