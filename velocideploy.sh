@@ -6,6 +6,21 @@ yellow='\e[33m'
 blue='\e[34m'
 clear='\e[0m'
 
+# Set permissions for AWS scripts
+if [ -d "$SCRIPT_DIR/velocideploy/aws" ]; then
+    find "$SCRIPT_DIR/velocideploy/aws" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for AWS scripts."
+fi
+
+# Set permissions for Azure scripts
+if [ -d "$SCRIPT_DIR/velocideploy/azure" ]; then
+    find "$SCRIPT_DIR/velocideploy/azure" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for Azure scripts."
+fi
+
+# Set permissions for GCP scripts
+if [ -d "$SCRIPT_DIR/velocideploy/gcp" ]; then
+    find "$SCRIPT_DIR/velocideploy/gcp" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for GCP scripts."
+fi
+
 # Function to install Velociraptor on AWS
 function install_aws() {
     echo -e "${blue}Installing Velociraptor on AWS...${clear}"
@@ -43,21 +58,6 @@ function display_ip() {
         echo -e "${red}Failed to retrieve IP address.${clear}"
     fi
 }
-
-# Set permissions for AWS scripts
-if [ -d "$SCRIPT_DIR/velocideploy/aws" ]; then
-    find "$SCRIPT_DIR/velocideploy/aws" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for AWS scripts."
-fi
-
-# Set permissions for Azure scripts
-if [ -d "$SCRIPT_DIR/velocideploy/azure" ]; then
-    find "$SCRIPT_DIR/velocideploy/azure" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for Azure scripts."
-fi
-
-# Set permissions for GCP scripts
-if [ -d "$SCRIPT_DIR/velocideploy/gcp" ]; then
-    find "$SCRIPT_DIR/velocideploy/gcp" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for GCP scripts."
-fi
 
 # Main menu
 function menu() {
