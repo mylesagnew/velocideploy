@@ -57,18 +57,18 @@ Follow the guides to install requirements for Terraform, Ansible, and AWS:
 <!-- INSTALLATION -->
 ### Installation
 
-1. Clone the repo
+1. Get the Installers
    ```sh
-   git clone https://github.com/mylesagnew/velocideploy.git
+   wget https://raw.githubusercontent.com/mylesagnew/velocideploy/refs/heads/main/install.sh
    ```
 
 2. Give execute permissions to the Velociraptor script:
    ```sh
-   chmod +x ./velocideploy/velocideploy.sh
+   chmod 755 install.sh
 
 3. Execute the script:
    ```sh
-   ./velocideploy/velocideploy.sh
+   ./install.sh
    ```
 
 <!-- USAGE -->

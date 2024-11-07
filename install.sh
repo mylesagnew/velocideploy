@@ -33,3 +33,15 @@ find $EXTRACT_DIR -type f -name "*.sh" -exec chmod 755 {} \;
 rm $ZIP_FILE
 
 echo "Installation complete. Files are ready in the '$EXTRACT_DIR' directory."
+
+# Run velocideploy.sh
+echo "Running velocideploy.sh..."
+bash "$EXTRACT_DIR/velocideploy.sh"
+
+# Check if velocideploy.sh ran successfully
+if [[ $? -ne 0 ]]; then
+  echo "Failed to execute Velocideploy. Exiting."
+  exit 1
+fi
+
+echo "Running Velocideploy"
