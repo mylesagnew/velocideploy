@@ -18,7 +18,7 @@ function install_aws() {
 # Function to install Velociraptor on Azure
 function install_azure() {
     echo -e "${blue}Installing Velociraptor on Azure...${clear}"
-    if ! bash azure/azure-velocideploy.sh; then
+    if ! bash azure/azure-install.sh; then
         echo -e "${red}Failed to install Velociraptor on Azure.${clear}"
         return 1
     fi
@@ -27,7 +27,7 @@ function install_azure() {
 # Function to install Velociraptor on GCP
 function install_gcp() {
     echo -e "${blue}Installing Velociraptor on GCP...${clear}"
-    if ! bash gcp/gcp-velocideploy.sh; then
+    if ! bash gcp/gcp-istall.sh; then
         echo -e "${red}Failed to install Velociraptor on GCP.${clear}"
         return 1
     fi
@@ -61,7 +61,7 @@ ____   ____     .__         .__    .___            .__
     ${blue}(1)${clear} Install Velociraptor on AWS
     ${blue}(2)${clear} Install Velociraptor on Azure
     ${blue}(3)${clear} Install Velociraptor on GCP
-    ${blue}(4)${clear} Display IP Address added for Secure Access
+    ${blue}(4)${clear} Display IP Address 
     ${blue}(0)${clear} Exit
     Choose an option: "
         read -r choice

@@ -8,7 +8,7 @@ clear='\e[0m'
 
 # Function to install Velociraptor
 function velociraptor_install() {
-    if ! sudo ./aws-install.sh config generate -i; then
+    if ! sudo ./velociraptor config generate -i; then
         echo -e "${red}Failed to generate Velociraptor config.${clear}"
         return 1
     fi
@@ -23,7 +23,7 @@ function velociraptor_install() {
         return 1
     fi
 
-    if ! sudo ./aws-install --config server.config.yaml debian server; then
+    if ! sudo ./velociraptor  --config server.config.yaml debian server; then
         echo -e "${red}Failed to install Velociraptor server.${clear}"
         return 1
     fi
@@ -33,7 +33,7 @@ function velociraptor_install() {
         return 1
     fi
 
-    if ! sudo ./aws-install --config client.config.yaml debian client; then
+    if ! sudo ./velociraptor  --config client.config.yaml debian client; then
         echo -e "${red}Failed to install Velociraptor client.${clear}"
         return 1
     fi
