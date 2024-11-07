@@ -49,7 +49,7 @@
 
   - name: Add AWS public IP to script
     replace:
-      path: ./vrdeploy.sh
+      path: ./aws-deploy.sh
       regexp: 'aws_public_ip'
       replace: "{{ ansible_host }}"
 
