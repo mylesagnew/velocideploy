@@ -44,8 +44,20 @@ function display_ip() {
     fi
 }
 
-# Permission to execute sub-scripts
-find "$SCRIPT_DIR/velocideploy/aws" "$SCRIPT_DIR/velocideploy/azure" "$SCRIPT_DIR/velocideploy/gcp" -type f -name "*.sh" -exec chmod 755 {} \;
+# Set permissions for AWS scripts
+if [ -d "$SCRIPT_DIR/velocideploy/aws" ]; then
+    find "$SCRIPT_DIR/velocideploy/aws" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for AWS scripts."
+fi
+
+# Set permissions for Azure scripts
+if [ -d "$SCRIPT_DIR/velocideploy/azure" ]; then
+    find "$SCRIPT_DIR/velocideploy/azure" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for Azure scripts."
+fi
+
+# Set permissions for GCP scripts
+if [ -d "$SCRIPT_DIR/velocideploy/gcp" ]; then
+    find "$SCRIPT_DIR/velocideploy/gcp" -type f -name "*.sh" -exec chmod 755 {} \; || echo "Error: Failed to set permissions for GCP scripts."
+fi
 
 # Main menu
 function menu() {
