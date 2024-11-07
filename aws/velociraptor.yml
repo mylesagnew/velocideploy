@@ -36,10 +36,10 @@
       dest: ./aws-deploy.sh
       mode: +x
   
-  - name: Copy win_install.bat
+  - name: Copy install.bat
     copy:
-      src: ./win_install.bat
-      dest: ./Windows/win_install.bat
+      src: ./install.bat
+      dest: ./Windows/0install.bat
 
   - name: Copy nix_install.sh
     copy:
