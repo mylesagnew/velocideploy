@@ -6,10 +6,13 @@ yellow='\e[33m'
 blue='\e[34m'
 clear='\e[0m'
 
+# Get the directory of the current script
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Function to install Velociraptor on AWS
 function install_aws() {
     echo -e "${blue}Installing Velociraptor on AWS...${clear}"
-    if ! bash ./aws/aws-install.sh; then
+    if ! bash aws/aws-install.sh; then
         echo -e "${red}Failed to install Velociraptor on AWS.${clear}"
         return 1
     fi
@@ -18,7 +21,7 @@ function install_aws() {
 # Function to install Velociraptor on Azure
 function install_azure() {
     echo -e "${blue}Installing Velociraptor on Azure...${clear}"
-    if ! bash azure/azure-install.sh; then
+    if ! bash "$script_dir/azure/azure-install.sh"; then
         echo -e "${red}Failed to install Velociraptor on Azure.${clear}"
         return 1
     fi
@@ -27,7 +30,7 @@ function install_azure() {
 # Function to install Velociraptor on GCP
 function install_gcp() {
     echo -e "${blue}Installing Velociraptor on GCP...${clear}"
-    if ! bash gcp/gcp-install.sh; then
+    if ! bash "$script_dir/gcp/gcp-install.sh"; then
         echo -e "${red}Failed to install Velociraptor on GCP.${clear}"
         return 1
     fi
