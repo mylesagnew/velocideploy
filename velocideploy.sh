@@ -50,9 +50,7 @@ function display_ip() {
 # Function to SSH into AWS instance
 function ssh_to_instance() {
     echo -e "${blue}SSH into AWS instance...${clear}"
-    read -rp "Enter Case Name (without .pem): " case_name
-    read -rp "Enter Public IP: " public_ip
-    ssh -i "$script_dir/aws/${case_name}.pem" ubuntu@"${public_ip}"
+    bash "$script_dir/aws/ssh-host"
 }
 
 # Main menu
