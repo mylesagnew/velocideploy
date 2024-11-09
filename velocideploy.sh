@@ -9,7 +9,7 @@ clear='\e[0m'
 # Function to install Velociraptor on AWS
 function install_aws() {
     echo -e "${blue}Installing Velociraptor on AWS...${clear}"
-    if ! bash aws/aws-install.sh; then
+    if ! bash /velocideploy-main/aws/aws-install.sh; then
         echo -e "${red}Failed to install Velociraptor on AWS.${clear}"
         return 1
     fi
