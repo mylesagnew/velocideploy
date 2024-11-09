@@ -27,7 +27,7 @@ function install_azure() {
 # Function to install Velociraptor on GCP
 function install_gcp() {
     echo -e "${blue}Installing Velociraptor on GCP...${clear}"
-    if ! bash gcp/gcp-istall.sh; then
+    if ! bash gcp/gcp-install.sh; then
         echo -e "${red}Failed to install Velociraptor on GCP.${clear}"
         return 1
     fi
