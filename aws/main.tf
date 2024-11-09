@@ -101,7 +101,7 @@ resource "aws_instance" "instance-velo" {
     volume_size = "1024"
     }
     provisioner "local-exec" {
-#Populate variables into SSH command and append to velociraptor.sh script
-    command = "echo $'\nssh -i ${var.case_name}.pem ubuntu@${aws_instance.instance-velo.public_ip}' >> aws-deploy.sh"
+#Populate variables into SSH command and create ssh-host file
+    command = "echo $'\nssh -i ${var.case_name}.pem ubuntu@${aws_instance.instance-velo.public_ip}' >> ssh-host"
 }
 }
