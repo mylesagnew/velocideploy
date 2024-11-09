@@ -25,7 +25,8 @@ function velociraptor_install() {
 
     # Install the server package
     sudo ./velociraptor --config "$SERVER_CONFIG" debian server
-    sudo apt install -y ./velociraptor_server*.deb
+    chmod +x velociraptor_server*.deb
+    sudo dpkg -i  ./velociraptor_server*.deb
 
     # Install the client package and move files to appropriate directories
     sudo ./velociraptor --config "$CLIENT_CONFIG" debian client
