@@ -6,19 +6,28 @@ yellow='\e[33m'
 blue='\e[34m'
 clear='\e[0m'
 
-# Function to install Velociraptor
 function velociraptor_install() {
+    # Generate the configuration files
     sudo ./velociraptor config generate -i
-    sudo sed -e '60,/bind_address:/{s/127.0.0.1/0.0.0.0/}' -i server.config.yaml
-    sudo sed -e 's/localhost/aws_public_ip/g' -i client.config.yaml
+    
+    # Modify server configuration to listen on all IPs
+    sudo sed -i '60,/bind_address:/s/127.0.0.1/0.0.0.0/' server.config.yaml
+    
+    # Replace 'localhost' with the AWS public IP in the client configuration
+    sudo sed -i 's/localhost/aws_public_ip/' client.config.yaml
 
+    # Install the server package
     sudo ./velociraptor --config server.config.yaml debian server
-    sudo apt install ./velociraptor*server.deb
-    sudo ./velociraptor --config client.config.yaml debian client
-    sudo mv velociraptor*client.deb ./Linux/nix-velociraptor.deb
-    sudo mv client.config.yaml ./Windows
+    sudo apt install -y ./velociraptor*server.deb
 
+    # Install the client package and move files to appropriate directories
+    sudo ./velociraptor --config client.config.yaml debian client
+    sudo mkdir -p ./Linux
+    sudo mv velociraptor*client.deb ./Linux/nix-velociraptor.deb
+    sudo mkdir -p ./Windows
+    sudo mv client.config.yaml ./Windows/
 }
+
 
 # Function to upload files to Dropbox
 function db_upload() {
