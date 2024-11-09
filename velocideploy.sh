@@ -22,7 +22,7 @@ function install_azure() {
         echo -e "${red}Failed to install Velociraptor on Azure.${clear}"
         return 1
     fi
-}q0
+}
 
 # Function to install Velociraptor on GCP
 function install_gcp() {
