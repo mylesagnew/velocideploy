@@ -7,27 +7,35 @@ blue='\e[34m'
 clear='\e[0m'
 
 function velociraptor_install() {
+    # Variables
+    SERVER_CONFIG="server.config.yaml"
+    CLIENT_CONFIG="client.config.yaml"
+    LINUX_DIR="./Linux"
+    WINDOWS_DIR="./Windows"
+    PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)  # Retrieves AWS public IP
+
     # Generate the configuration files
     sudo ./velociraptor config generate -i
     
     # Modify server configuration to listen on all IPs
-    sudo sed -i '60,/bind_address:/s/127.0.0.1/0.0.0.0/' server.config.yaml
+    sudo sed -i '60,/bind_address:/s/0.0.0.0/0.0.0.0/' "$SERVER_CONFIG"
     
     # Replace 'localhost' with the AWS public IP in the client configuration
-    sudo sed -i 's/localhost/aws_public_ip/' client.config.yaml
+    sudo sed -i "s/localhost/$PUBLIC_IP/" "$CLIENT_CONFIG"
 
     # Install the server package
-    sudo ./velociraptor --config server.config.yaml debian server
+    sudo ./velociraptor --config "$SERVER_CONFIG" debian server
     sudo apt install -y ./velociraptor*server.deb
 
     # Install the client package and move files to appropriate directories
-    sudo ./velociraptor --config client.config.yaml debian client
-    sudo mkdir -p ./Linux
-    sudo mv velociraptor*client.deb ./Linux/nix-velociraptor.deb
-    sudo mkdir -p ./Windows
-    sudo mv client.config.yaml ./Windows/
-}
+    sudo ./velociraptor --config "$CLIENT_CONFIG" debian client
+    mkdir -p "$LINUX_DIR" "$WINDOWS_DIR"
+    sudo mv velociraptor*client.deb "$LINUX_DIR/nix-velociraptor.deb"
+    sudo mv "$CLIENT_CONFIG" "$WINDOWS_DIR/"
 
+    # Cleanup
+    sudo rm -f ./velociraptor*server.deb
+}
 
 # Function to upload files to Dropbox
 function db_upload() {
