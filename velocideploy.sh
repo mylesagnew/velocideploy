@@ -9,7 +9,7 @@ clear='\e[0m'
 # Get the directory of the current script
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Function to install Velociraptor on Azure
+# Function to install Velociraptor on AWS
 function install_aws() {
     echo -e "${blue}Installing Velociraptor on AWS...${clear}"
     if ! bash "$script_dir/aws/aws-install.sh"; then
@@ -47,6 +47,14 @@ function display_ip() {
     fi
 }
 
+# Function to SSH into AWS instance
+function ssh_to_instance() {
+    echo -e "${blue}SSH into AWS instance...${clear}"
+    read -rp "Enter Case Name (without .pem): " case_name
+    read -rp "Enter Public IP: " public_ip
+    ssh -i "$script_dir/aws/${case_name}.pem" ubuntu@"${public_ip}"
+}
+
 # Main menu
 function menu() {
     while true; do
@@ -61,7 +69,8 @@ ____   ____     .__         .__    .___            .__
     ${blue}(1)${clear} Install Velociraptor on AWS
     ${blue}(2)${clear} Install Velociraptor on Azure
     ${blue}(3)${clear} Install Velociraptor on GCP
-    ${blue}(4)${clear} Display IP Address 
+    ${blue}(4)${clear} Display IP Address
+    ${blue}(5)${clear} SSH into AWS Instance
     ${blue}(0)${clear} Exit
     Choose an option: "
         read -r choice
@@ -70,6 +79,7 @@ ____   ____     .__         .__    .___            .__
         2) install_azure ;;
         3) install_gcp ;;
         4) display_ip ;;
+        5) ssh_to_instance ;;  # New SSH option
         0) exit 0 ;;
         *) echo -e "${red}Incorrect option. Try again.${clear}" ;;
         esac
