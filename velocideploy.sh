@@ -9,10 +9,10 @@ clear='\e[0m'
 # Get the directory of the current script
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Function to install Velociraptor on AWS
+# Function to install Velociraptor on Azure
 function install_aws() {
     echo -e "${blue}Installing Velociraptor on AWS...${clear}"
-    if ! bash aws/aws-install.sh; then
+    if ! bash "$script_dir/aws/aws-install.sh"; then
         echo -e "${red}Failed to install Velociraptor on AWS.${clear}"
         return 1
     fi
