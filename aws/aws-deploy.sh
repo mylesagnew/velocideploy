@@ -34,8 +34,6 @@ function velociraptor_install() {
     sudo mv velociraptor*client.deb "$LINUX_DIR/nix-velociraptor.deb"
     sudo mv "$CLIENT_CONFIG" "$WINDOWS_DIR/"
 
-    # Cleanup
-    sudo rm -f ./velociraptor*server.deb
 }
 
 # Function to upload files to Dropbox
@@ -85,7 +83,7 @@ function adduser() {
 
 # Function to reinstall Velociraptor
 function reinstall() {
-    sudo apt remove velociraptor-server
+    sudo dpkg -r velociraptor_server*.deb
     velociraptor_install
 }
 
