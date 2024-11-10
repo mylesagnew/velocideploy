@@ -23,17 +23,18 @@ get_region_from_main_tf() {
   echo "AWS Region: $AWS_REGION"
 }
 
-# Function to parse security group rule details for group-velo-gui from the Terraform state file
+# Function to parse security group rule details based on rule name
 get_security_group_rule_details_from_state() {
+  local rule_name=$1
   if [ ! -f "$TF_STATE_FILE" ]; then
     echo "Terraform state file not found at $TF_STATE_FILE"
     exit 1
   fi
   
   # Extract Security Group Rule details from the Terraform state file
-  SECURITY_GROUP_RULE_ID=$(jq -r '.resources[] | select(.type=="aws_security_group_rule" and .name=="group-velo-gui") | .instances[0].attributes.security_group_id // empty' "$TF_STATE_FILE")
-  PORT=$(jq -r '.resources[] | select(.type=="aws_security_group_rule" and .name=="group-velo-gui") | .instances[0].attributes.from_port // empty' "$TF_STATE_FILE")
-  PROTOCOL=$(jq -r '.resources[] | select(.type=="aws_security_group_rule" and .name=="group-velo-gui") | .instances[0].attributes.protocol // empty' "$TF_STATE_FILE")
+  SECURITY_GROUP_RULE_ID=$(jq -r ".resources[] | select(.type==\"aws_security_group_rule\" and .name==\"$rule_name\") | .instances[0].attributes.security_group_id // empty" "$TF_STATE_FILE")
+  PORT=$(jq -r ".resources[] | select(.type==\"aws_security_group_rule\" and .name==\"$rule_name\") | .instances[0].attributes.from_port // empty" "$TF_STATE_FILE")
+  PROTOCOL=$(jq -r ".resources[] | select(.type==\"aws_security_group_rule\" and .name==\"$rule_name\") | .instances[0].attributes.protocol // empty" "$TF_STATE_FILE")
 
   # Check if the Security Group Rule ID, Port, and Protocol were extracted correctly
   if [ -z "$SECURITY_GROUP_RULE_ID" ] || [ -z "$PORT" ] || [ -z "$PROTOCOL" ]; then
@@ -71,29 +72,49 @@ ip_exists() {
     --output text | grep -q "${IP}/32"
 }
 
+# Function to add IP to the specified security group rule
+add_ip_to_sg() {
+  if ip_exists; then
+    echo "IP $IP already exists in the security group rules."
+  else
+    echo "Adding IP $IP to the security group rules."
+    aws ec2 authorize-security-group-ingress \
+      --region "$AWS_REGION" \
+      --group-id "$SECURITY_GROUP_RULE_ID" \
+      --protocol "$PROTOCOL" \
+      --port "$PORT" \
+      --cidr "${IP}/32"
+    if [ $? -eq 0 ]; then
+      echo "Successfully added IP $IP to the security group."
+    else
+      echo "Failed to add IP to the security group."
+    fi
+  fi
+}
+
 # Gather AWS region from main.tf
 get_region_from_main_tf
 
-# Gather the security group rule details for group-velo-gui from the Terraform state file
-get_security_group_rule_details_from_state
+# Display menu options
+echo "Select an option:"
+echo "1. Add IP to SSH (group-velo-ssh)"
+echo "2. Add IP to ADMIN GUI (group-velo-gui)"
+read -p "Enter choice [1-2]: " choice
 
-# Get the IP address from the user or automatically
-get_ip "$1"
-
-# Add IP if it doesn't exist
-if ip_exists; then
-  echo "IP $IP already exists in the security group rules."
-else
-  echo "Adding IP $IP to the security group rules."
-  aws ec2 authorize-security-group-ingress \
-    --region "$AWS_REGION" \
-    --group-id "$SECURITY_GROUP_RULE_ID" \
-    --protocol "$PROTOCOL" \
-    --port "$PORT" \
-    --cidr "${IP}/32"
-  if [ $? -eq 0 ]; then
-    echo "Successfully added IP $IP to the security group."
-  else
-    echo "Failed to add IP to the security group."
-  fi
-fi
+# Execute the selected option
+case $choice in
+  1)
+    get_security_group_rule_details_from_state "group-velo-ssh"
+    get_ip "$1"
+    add_ip_to_sg
+    ;;
+  2)
+    get_security_group_rule_details_from_state "group-velo-gui"
+    get_ip "$1"
+    add_ip_to_sg
+    ;;
+  *)
+    echo "Invalid choice. Exiting."
+    exit 1
+    ;;
+esac
