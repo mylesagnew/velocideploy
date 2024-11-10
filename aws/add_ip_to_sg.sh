@@ -23,23 +23,27 @@ get_region_from_main_tf() {
   echo "AWS Region: $AWS_REGION"
 }
 
-# Function to parse security group rule ID from the Terraform state file
-get_security_group_rule_id_from_state() {
+# Function to parse security group rule details for group-velo-gui from the Terraform state file
+get_security_group_rule_details_from_state() {
   if [ ! -f "$TF_STATE_FILE" ]; then
     echo "Terraform state file not found at $TF_STATE_FILE"
     exit 1
   fi
   
-  # Extract Security Group Rule ID from the Terraform state file
+  # Extract Security Group Rule details from the Terraform state file
   SECURITY_GROUP_RULE_ID=$(jq -r '.resources[] | select(.type=="aws_security_group_rule" and .name=="group-velo-gui") | .instances[0].attributes.security_group_id // empty' "$TF_STATE_FILE")
+  PORT=$(jq -r '.resources[] | select(.type=="aws_security_group_rule" and .name=="group-velo-gui") | .instances[0].attributes.from_port // empty' "$TF_STATE_FILE")
+  PROTOCOL=$(jq -r '.resources[] | select(.type=="aws_security_group_rule" and .name=="group-velo-gui") | .instances[0].attributes.protocol // empty' "$TF_STATE_FILE")
 
-  # Check if the Security Group Rule ID was extracted correctly
-  if [ -z "$SECURITY_GROUP_RULE_ID" ]; then
-    echo "Error: Could not retrieve security group rule ID from Terraform state file."
+  # Check if the Security Group Rule ID, Port, and Protocol were extracted correctly
+  if [ -z "$SECURITY_GROUP_RULE_ID" ] || [ -z "$PORT" ] || [ -z "$PROTOCOL" ]; then
+    echo "Error: Could not retrieve security group rule details from Terraform state file."
     exit 1
   fi
   
   echo "Security Group Rule ID: $SECURITY_GROUP_RULE_ID"
+  echo "Port: $PORT"
+  echo "Protocol: $PROTOCOL"
 }
 
 # Function to get IP address either from input or automatically
@@ -70,8 +74,8 @@ ip_exists() {
 # Gather AWS region from main.tf
 get_region_from_main_tf
 
-# Gather the security group rule ID from the Terraform state file
-get_security_group_rule_id_from_state
+# Gather the security group rule details for group-velo-gui from the Terraform state file
+get_security_group_rule_details_from_state
 
 # Get the IP address from the user or automatically
 get_ip "$1"
@@ -84,8 +88,8 @@ else
   aws ec2 authorize-security-group-ingress \
     --region "$AWS_REGION" \
     --group-id "$SECURITY_GROUP_RULE_ID" \
-    --protocol tcp \
-    --port 22 \
+    --protocol "$PROTOCOL" \
+    --port "$PORT" \
     --cidr "${IP}/32"
   if [ $? -eq 0 ]; then
     echo "Successfully added IP $IP to the security group."
