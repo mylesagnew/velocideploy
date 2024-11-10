@@ -33,7 +33,6 @@ function velociraptor_install() {
     mkdir -p "$LINUX_DIR" "$WINDOWS_DIR"
     sudo mv velociraptor*client.deb "$LINUX_DIR/nix-velociraptor.deb"
     sudo mv "$CLIENT_CONFIG" "$WINDOWS_DIR/"
-
 }
 
 # Function to upload files to Dropbox
@@ -87,6 +86,16 @@ function reinstall() {
     velociraptor_install
 }
 
+# New function to restart Velociraptor
+function restart_velociraptor() {
+    sudo service velociraptor_server restart
+}
+
+# New function to check Velociraptor status
+function check_status() {
+    sudo service velociraptor_server status
+}
+
 # Menu function with the original aws-deploy.sh header retained
 function menu() {
     echo -ne "
@@ -101,6 +110,8 @@ ____   ____     .__         .__    .___            .__
     ${blue}(2)${clear} Upload Sensors
     ${blue}(3)${clear} Add User
     ${blue}(4)${clear} Reinstall Velociraptor
+    ${blue}(5)${clear} Restart Velociraptor
+    ${blue}(6)${clear} Check Status
     ${blue}(0)${clear} Exit
     Choose an option: "
     read -r choice
@@ -109,6 +120,8 @@ ____   ____     .__         .__    .___            .__
     2) db_upload ; menu ;;
     3) adduser ; menu ;;
     4) reinstall ; menu ;;
+    5) restart_velociraptor ; menu ;;
+    6) check_status ; menu ;;
     0) exit 0 ;;
     *) echo -e "${red}Incorrect option. Try again.${clear}" ; menu ;;
     esac
