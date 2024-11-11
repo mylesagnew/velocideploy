@@ -96,7 +96,26 @@ function check_status() {
     sudo service velociraptor_server status
 }
 
-# Menu function with the original aws-deploy.sh header retained
+# New function to fix Bind IP
+function fix_bind_ip() {
+    # Specify the configuration file path
+    config_file="server.config.yaml"  # Adjust this path if necessary
+
+    # Check if the file exists
+    if [[ -f "$config_file" ]]; then
+        # Create a backup of the original file
+        cp "$config_file" "${config_file}.bak"
+        echo "Backup of the original file created at ${config_file}.bak"
+
+        # Use sed to replace bind_address values
+        sudo sed -i 's/bind_address: 127\.0\.0\.1/bind_address: 0.0.0.0/g' "$config_file"
+        echo "Updated all bind_address entries from 127.0.0.1 to 0.0.0.0 in $config_file"
+    else
+        echo "Error: $config_file does not exist."
+    fi
+}
+
+# Menu function with added Fix Bind IP option
 function menu() {
     echo -ne "
     ${yellow}
@@ -112,6 +131,7 @@ ____   ____     .__         .__    .___            .__
     ${blue}(4)${clear} Reinstall Velociraptor
     ${blue}(5)${clear} Restart Velociraptor
     ${blue}(6)${clear} Check Status
+    ${blue}(7)${clear} Fix Bind IP
     ${blue}(0)${clear} Exit
     Choose an option: "
     read -r choice
@@ -122,10 +142,12 @@ ____   ____     .__         .__    .___            .__
     4) reinstall ; menu ;;
     5) restart_velociraptor ; menu ;;
     6) check_status ; menu ;;
+    7) fix_bind_ip ; menu ;;  
     0) exit 0 ;;
     *) echo -e "${red}Incorrect option. Try again.${clear}" ; menu ;;
     esac
 }
+
 
 # Start the menu
 menu
