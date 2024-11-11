@@ -95,23 +95,21 @@ function restart_velociraptor() {
 function check_status() {
     sudo service velociraptor_server status
 }
-
-# New function to fix Bind IP
 function fix_bind_ip() {
-    # Specify the configuration file path
-    config_file="server.config.yaml"  # Adjust this path if necessary
+    # Specify the full path of the configuration file
+    vr_config_file="/etc/velociraptor/server.config.yaml"
 
     # Check if the file exists
-    if [[ -f "$config_file" ]]; then
+    if [[ -f "$vr_config_file" ]]; then
         # Create a backup of the original file
-        cp "$config_file" "${config_file}.bak"
-        echo "Backup of the original file created at ${config_file}.bak"
+        cp "$vr_config_file" "${config_file}.bak"
+        echo "Backup of the original file created at ${vr_config_file}.bak"
 
         # Use sed to replace bind_address values
-        sudo sed -i 's/bind_address: 127\.0\.0\.1/bind_address: 0.0.0.0/g' "$config_file"
-        echo "Updated all bind_address entries from 127.0.0.1 to 0.0.0.0 in $config_file"
+        sudo sed -i 's/bind_address: 127\.0\.0\.1/bind_address: 0.0.0.0/g' "$vr_config_file"
+        echo "Updated all bind_address entries from 127.0.0.1 to 0.0.0.0 in $vr_config_file"
     else
-        echo "Error: $config_file does not exist."
+        echo "Error: $vr_config_file does not exist."
     fi
 }
 
