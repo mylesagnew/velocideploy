@@ -88,7 +88,8 @@ function reinstall() {
 
 # New function to restart Velociraptor
 function restart_velociraptor() {
-    sudo service velociraptor_server restart
+    sudo service velociraptor_server stop
+    sudo service velociraptor_server start
 }
 
 # New function to check Velociraptor status
@@ -102,7 +103,7 @@ function fix_bind_ip() {
     # Check if the file exists
     if [[ -f "$vr_config_file" ]]; then
         # Create a backup of the original file
-        cp "$vr_config_file" "${config_file}.bak"
+        cp "$vr_config_file" "${vr_config_file}.bak"
         echo "Backup of the original file created at ${vr_config_file}.bak"
 
         # Use sed to replace bind_address values
@@ -125,7 +126,7 @@ ____   ____     .__         .__    .___            .__
               \/          \/        \/    \/|__|               \/ ${clear}
     ${blue}(1)${clear} Install Velociraptor Server
     ${blue}(2)${clear} Upload Sensors
-    ${blue}(3)${clear} Add User
+    ${blue}(3)${clear} Add User to GUI
     ${blue}(4)${clear} Reinstall Velociraptor
     ${blue}(5)${clear} Restart Velociraptor
     ${blue}(6)${clear} Check Status
