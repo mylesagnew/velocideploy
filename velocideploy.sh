@@ -50,8 +50,7 @@ function display_ip() {
 # Function to SSH into AWS instance
 function ssh_to_instance() {
     echo -e "${blue}SSH into AWS instance...${clear}"
-    chmod +x "$script_dir/aws/ssh-host"
-    bash "$script_dir/aws/ssh-host"
+    sudo bash "$script_dir/aws/ssh-host"
 }
 
 # Main menu
